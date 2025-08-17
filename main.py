@@ -24,10 +24,11 @@ def add_task(task:str,desc:str = None):
 def show_tasks():
     """Show all tasks in Todoist."""
     todo = TodoistAPI(todoist_api_token)
-    results = todo.get_tasks()
+    results = todo.get_tasks(project_id='6cg3Mv9mq8rxr8qv')
     tasks = []
     for task_list in results:
         for task in task_list:
+            #print(task)
             tasks.append(task.content)
     return tasks
 
