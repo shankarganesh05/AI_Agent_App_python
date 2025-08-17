@@ -34,14 +34,14 @@ def show_tasks():
 tool = [add_task,show_tasks]
 
 llm = ChatGoogleGenerativeAI(
-    model="gemini-1.5-flash",
+    model="gemini-2.5-flash",
     google_api_key=gemini_api_key,
     temperature=0.3)
 
 system_prompt = """You are a helpful AI assistant. 
 You will help the user to add tasks.
 You will help the user to show existing tasks.
-if the user asks to show the tasks, you will print the tasks in a bullet point format."""
+if the user asks to show the tasks, you will print the tasks. Print them in a bullet point format."""
 #user_input = input("You: ")
 prompt  = ChatPromptTemplate([
     ("system", system_prompt),
