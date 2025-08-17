@@ -24,9 +24,13 @@ def add_task(task:str,desc:str = None):
 def show_tasks():
     """Show all tasks in Todoist."""
     todo = TodoistAPI(todoist_api_token)
-    tasks = todo.get_tasks()
-    task_list = [task.content for task in tasks]
-    return "\n".join(task_list) if task_list else "No tasks found."
+    results = todo.get_tasks()
+    tasks = []
+    for task_list in results:
+        for task in task_list:
+            tasks.append(task.content)
+    return tasks
+
 tool = [add_task,show_tasks]
 
 llm = ChatGoogleGenerativeAI(
@@ -34,7 +38,10 @@ llm = ChatGoogleGenerativeAI(
     google_api_key=gemini_api_key,
     temperature=0.3)
 
-system_prompt = """You are a helpful AI assistant. You will help the user to add tasks"""
+system_prompt = """You are a helpful AI assistant. 
+You will help the user to add tasks.
+You will help the user to show existing tasks.
+if the user asks to show the tasks, you will print the tasks in a bullet point format."""
 #user_input = input("You: ")
 prompt  = ChatPromptTemplate([
     ("system", system_prompt),
